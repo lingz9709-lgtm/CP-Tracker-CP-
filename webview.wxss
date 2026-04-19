@@ -1,0 +1,9 @@
+.wrap {
+  min-height: 100vh;
+}
+
+.tip {
+  padding: 28px 16px;
+  color: #666;
+  text-align: center;
+}

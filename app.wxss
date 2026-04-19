@@ -1,0 +1,38 @@
+page {
+  background: #373327;
+  color: #d5c6b3;
+  font-family: "Songti SC", "STSong", "FangSong", "PingFang SC", "Microsoft YaHei", serif !important;
+}
+
+view,
+text,
+input,
+textarea,
+button,
+label,
+picker {
+  font-family: "Songti SC", "STSong", "FangSong", "PingFang SC", "Microsoft YaHei", serif !important;
+}
+
+.mono {
+  font-family: "Songti SC", "STSong", "FangSong", "PingFang SC", "Microsoft YaHei", serif !important;
+}
+
+.title,
+.sub,
+.section-title,
+.section-action,
+.case-num,
+.case-tier,
+.classified-stamp,
+.tl-title,
+.modal-title,
+.ugc-card-title,
+.lab,
+.sec,
+.up-t,
+.pv-page,
+.qtext {
+  font-family: "STHeiti", "PingFang SC", "Microsoft YaHei", "Heiti SC", sans-serif !important;
+  font-weight: 800 !important;
+}

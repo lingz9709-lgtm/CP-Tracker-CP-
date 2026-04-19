@@ -1,0 +1,59 @@
+<view class="wrap">
+  <view wx:if="{{stage==='intro'}}" class="intro">
+    <view class="badge">🔮</view>
+    <view class="title">CP属性测定</view>
+    <view class="sub mono">16维度 · 25种CP人格 · 曼哈顿距离匹配</view>
+    <view class="desc">测出你更像CP中的哪一方<br />以及你为什么会爱上这个CP</view>
+    <button class="start" bindtap="start">开始测定</button>
+  </view>
+
+  <view wx:elif="{{stage==='quiz'}}" class="quiz">
+    <view class="prog mono">{{progressText}}</view>
+    <view class="track"><view class="fill" style="width: {{pct}}%"></view></view>
+    <view class="dim mono">[维度] {{current.dim}}</view>
+    <view class="qcard">
+      <view class="qnum mono">Q{{qNo}}</view>
+      <view class="qtext">{{current.text}}</view>
+    </view>
+    <view class="opts">
+      <view wx:for="{{currentOpts}}" wx:key="value" class="opt {{item.selected?'on':''}}" data-v="{{item.value}}" bindtap="select">
+        <text class="letter mono">{{item.letter}}</text>
+        <text>{{item.text}}</text>
+      </view>
+    </view>
+    <view class="nav">
+      <button class="navbtn mono" bindtap="prev" disabled="{{!canPrev}}">← 上一题</button>
+      <button class="navbtn mono next" bindtap="next" disabled="{{!canNext}}" wx:if="{{!isLast}}">下一题 →</button>
+      <button class="navbtn mono next" bindtap="finish" disabled="{{!canNext}}" wx:else>查看结果 ↗</button>
+    </view>
+  </view>
+
+  <view wx:else class="result">
+    <view class="banner">
+      <view class="lab mono">人格匹配结果</view>
+      <view class="name">{{result.name}}</view>
+      <view class="sub2">{{result.sub}}</view>
+    </view>
+    <view class="body">
+      <view class="sec mono">人格侧写 · 判词</view>
+      <view class="p">{{result.desc}}</view>
+      <view class="sec mono">你为什么爱这个CP</view>
+      <view class="box">{{result.why}}</view>
+    </view>
+    <button class="share mono" bindtap="copyShare">📤 复制分享文案</button>
+    <button class="share mono" bindtap="openPreview">🖼 一键预览判词图</button>
+    <button class="retry mono" bindtap="reset">↩ 重新测定</button>
+  </view>
+
+  <view class="pv-mask {{previewOpen?'show':''}}" bindtap="closePreview">
+    <view class="pv-box" catchtap="noop" bindtouchstart="onPreviewStart" bindtouchend="onPreviewEnd">
+      <scroll-view class="pv-html-wrap" scroll-y="true">
+        <rich-text class="pv-html" nodes="{{previewHtmls[previewIndex]}}"></rich-text>
+      </scroll-view>
+      <view class="pv-close" bindtap="closePreview">×</view>
+      <view class="pv-page mono">判词 {{previewIndexText}}</view>
+      <view class="pv-arrow mono">左滑下一张 ←</view>
+      <view class="pv-meta mono">{{previewIndexText}} / {{previewTotal}}</view>
+    </view>
+  </view>
+</view>

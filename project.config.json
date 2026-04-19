@@ -1,0 +1,97 @@
+{
+  "description": "CP 侦探局 · 小程序版",
+  "packOptions": {
+    "ignore": [
+      {
+        "value": "miniprogram/data/cp_effects.json",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/data/kb_index.json",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/pages/kb/kb.js",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/pages/kb/kb.json",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/pages/kb/kb.wxml",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/pages/kb/kb.wxss",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/utils/http.js",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/utils/kb.js",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/fonts/fz-body.ttf",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/fonts/fz-title.ttf",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/assets/verdict/1.jpg",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/assets/verdict/2.png",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/assets/verdict/3.png",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/assets/verdict/4.png",
+        "type": "file"
+      }
+    ],
+    "include": []
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "postcss": true,
+    "minified": true,
+    "enhance": true,
+    "compileWorklet": false,
+    "uglifyFileName": false,
+    "uploadWithSourceMap": true,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true,
+    "minifyWXML": true,
+    "localPlugins": false,
+    "disableUseStrict": false,
+    "useCompilerPlugins": false,
+    "condition": false,
+    "swc": false,
+    "disableSWC": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    }
+  },
+  "compileType": "miniprogram",
+  "libVersion": "3.6.6",
+  "appid": "wxff0560467368c95a",
+  "projectname": "cp-detective-miniprogram",
+  "miniprogramRoot": "miniprogram/",
+  "condition": {},
+  "simulatorPluginLibVersion": {},
+  "editorSetting": {}
+}

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080">
+<title>CP Tracker - 厨神太太</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Serif+SC:wght@400;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width:1080px;height:1080px;background:#f5f0e8;font-family:'Noto Serif SC',serif;overflow:hidden;position:relative; }
+  .card { width:1080px;height:1080px;background:#f5f0e8;position:relative;display:flex;flex-direction:column; }
+  .border-top { height:8px;background:#c0392b;width:100%; }
+  .border-top-thin { height:3px;background:#2c2c2c;width:100%;margin-top:3px; }
+  .header { padding:18px 30px 12px 30px;display:flex;align-items:flex-start;gap:0;background:#f5f0e8; }
+  .brand-left { display:flex;flex-direction:column;gap:6px; }
+  .brand-title { font-size:62px;font-weight:900;color:#1a1a1a;font-family:'Black Han Sans','Arial Black',sans-serif;letter-spacing:-1px;line-height:1; }
+  .love-type-row { display:flex;align-items:center;gap:6px; }
+  .badge { background:#c0392b;color:#fff;font-size:22px;font-weight:900;font-family:'Black Han Sans','Arial Black',sans-serif;padding:4px 14px;letter-spacing:1px; }
+  .ampersand { color:#1a1a1a;font-size:28px;font-weight:900;font-family:'Arial Black',sans-serif; }
+  .brand-right { display:flex;flex-direction:column;justify-content:center;padding-left:30px;padding-top:4px;flex:1; }
+  .divider-thick { height:5px;background:#c0392b;margin:0 30px; }
+  .divider-thin { height:2px;background:#2c2c2c;margin:4px 30px 0; }
+  .content { display:flex;flex:1;padding:20px 30px 0 30px;gap:20px; }
+  .left-panel { width:400px;display:flex;flex-direction:column;gap:16px; }
+  .radar-container { background:#ede8dc;border:2px solid #b5a98a;padding:20px 10px;display:flex;align-items:center;justify-content:center;height:300px; }
+  .quote-box { background:#c0392b;padding:16px 18px;color:#fff;font-size:20px;font-weight:700;line-height:1.6;letter-spacing:1px; }
+  .body-text { font-size:15px;color:#2c2c2c;line-height:1.9;letter-spacing:0.5px;text-align:justify; }
+  .right-panel { flex:1;position:relative;overflow:hidden; }
+  .newspaper-bg { position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 18px,rgba(0,0,0,0.04) 18px,rgba(0,0,0,0.04) 19px),repeating-linear-gradient(90deg,transparent,transparent 50px,rgba(0,0,0,0.02) 50px,rgba(0,0,0,0.02) 51px);background-color:#e8e0d0; }
+  .newspaper-torn { position:absolute;top:0;right:0;width:100%;height:130px;background:#d4cbb8;clip-path:polygon(0 0,100% 0,100% 60%,85% 80%,70% 65%,55% 85%,40% 70%,25% 90%,10% 75%,0 85%); }
+  .dots-overlay { position:absolute;inset:0;background-image:radial-gradient(circle,rgba(0,0,0,0.12) 1px,transparent 1px);background-size:8px 8px;opacity:0.5; }
+  .illustration { position:absolute;bottom:50px;left:50%;transform:translateX(-50%); }
+  .border-bottom-thin { height:3px;background:#2c2c2c;width:100%;margin-top:auto; }
+  .border-bottom { height:8px;background:#c0392b;width:100%;margin-top:3px; }
+  canvas { display:block; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="border-top"></div>
+  <div class="border-top-thin"></div>
+
+  <div class="header">
+    <div class="brand-left">
+      <div class="brand-title">CP Tracker</div>
+      <div class="love-type-row">
+        <div class="badge">LOVE</div>
+        <span class="ampersand">&amp;</span>
+        <div class="badge">TYPE</div>
+      </div>
+    </div>
+    <div class="brand-right">
+      <div style="font-size:62px;font-weight:900;color:#1a1a1a;font-family:'Black Han Sans','Arial Black',sans-serif;letter-spacing:-1px;line-height:1;">25型 CP人格</div>
+      <div style="display:flex;align-items:baseline;gap:30px;margin-top:4px;">
+        <div style="font-size:42px;font-weight:900;color:#c0392b;font-family:'Black Han Sans','Arial Black',sans-serif;letter-spacing:2px;line-height:1;">CHEF</div>
+        <div style="font-size:52px;font-weight:900;color:#1a1a1a;font-family:'Black Han Sans','Noto Serif SC',sans-serif;letter-spacing:4px;line-height:1;">厨神太太</div>
+      </div>
+      <div style="font-size:17px;color:#2c2c2c;margin-top:6px;letter-spacing:1px;">情绪与内容的生产者：家产深夜食堂里最好厨子</div>
+    </div>
+  </div>
+
+  <div class="divider-thick"></div>
+  <div class="divider-thin"></div>
+
+  <div class="content">
+    <div class="left-panel">
+      <div class="radar-container">
+        <canvas id="radar" width="360" height="280"></canvas>
+      </div>
+      <div class="quote-box">
+        两眼一睁就是做饭，<br>同好的回应是你最大的满足。
+      </div>
+      <div class="body-text">
+        作为情绪与内容的生产者，你在日复一日的创作与分享中，不断地传递着自己的情感与思想。<br>
+        你将每一次CP间的互动都化为创作的燃料。作为情绪与内容的生产者，捕捉生活的点滴，把喜怒哀乐凝练成文字、画面或旋律。<br>
+        日复一日，你坚持创作与分享，不仅是输出内容，更是在传递思想与温度，用作品与CP进行对话，在不断的表达中丰盈对CP的理解，也温暖他人。
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <div class="newspaper-bg"></div>
+      <div class="newspaper-torn"></div>
+      <div class="dots-overlay"></div>
+      <div class="illustration">
+        <svg width="360" height="360" viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg">
+          <!-- Food bowl / rice bowl illustration -->
+          <!-- Bowl body -->
+          <ellipse cx="180" cy="260" rx="140" ry="50" fill="#1a1a1a"/>
+          <path d="M40 240 Q40 310 180 320 Q320 310 320 240 Z" fill="#1a1a1a"/>
+          <ellipse cx="180" cy="240" rx="140" ry="40" fill="#2a2a2a"/>
+          <!-- Rice/food content - white irregular shapes -->
+          <path d="M100 225 C110 210 130 205 150 215 C160 200 180 195 200 210 C215 200 235 205 240 220 C250 210 260 215 258 230 C250 240 230 245 210 238 C195 248 165 250 145 242 C125 248 105 242 100 225 Z" fill="white" opacity="0.9"/>
+          <path d="M115 215 C125 205 140 200 155 210 C165 198 185 192 205 207 C218 198 232 202 235 215" fill="none" stroke="white" stroke-width="3" opacity="0.6"/>
+          <!-- Noodle/food swirls -->
+          <path d="M120 230 C140 220 160 235 180 225 C200 215 220 230 240 220" stroke="#c8a050" stroke-width="4" fill="none" opacity="0.7"/>
+          <path d="M125 238 C145 228 165 240 185 230 C205 220 225 235 242 228" stroke="#c8a050" stroke-width="3" fill="none" opacity="0.5"/>
+          <!-- Bowl highlights -->
+          <path d="M45 240 Q45 265 60 275" stroke="#3a3a3a" stroke-width="3" fill="none"/>
+          <path d="M310 240 Q315 262 300 275" stroke="#3a3a3a" stroke-width="3" fill="none"/>
+          <!-- White outline -->
+          <path d="M40 240 Q40 310 180 320 Q320 310 320 240" fill="none" stroke="white" stroke-width="7"/>
+          <ellipse cx="180" cy="240" rx="140" ry="40" fill="none" stroke="white" stroke-width="7"/>
+          <!-- Steam lines -->
+          <path d="M140 195 C135 180 145 165 140 150" stroke="#2a2a2a" stroke-width="3" fill="none" opacity="0.5"/>
+          <path d="M180 190 C175 175 185 160 180 145" stroke="#2a2a2a" stroke-width="3" fill="none" opacity="0.5"/>
+          <path d="M220 193 C215 178 225 163 220 148" stroke="#2a2a2a" stroke-width="3" fill="none" opacity="0.5"/>
+          <!-- Halftone bottom -->
+          <g opacity="0.25">
+            <circle cx="120" cy="335" r="4" fill="#1a1a1a"/>
+            <circle cx="145" cy="342" r="5" fill="#1a1a1a"/>
+            <circle cx="175" cy="346" r="6" fill="#1a1a1a"/>
+            <circle cx="205" cy="344" r="5" fill="#1a1a1a"/>
+            <circle cx="235" cy="337" r="4" fill="#1a1a1a"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div style="height:16px;"></div>
+  <div class="border-bottom-thin"></div>
+  <div class="border-bottom"></div>
+</div>
+
+<script>
+const canvas = document.getElementById('radar');
+const ctx = canvas.getContext('2d');
+const W = canvas.width, H = canvas.height;
+const cx = W/2, cy = H/2 + 10;
+const R = 110;
+
+const values = [62, 90, 72, 96, 92];
+const max = 100;
+
+function getPoint(i, r) {
+  const angle = (i * 2 * Math.PI / 5) - Math.PI/2;
+  return { x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle) };
+}
+
+// Dark bg
+ctx.fillStyle = 'rgba(60,50,30,0.85)';
+ctx.beginPath();
+for(let i=0;i<5;i++){
+  const p = getPoint(i,R);
+  i===0 ? ctx.moveTo(p.x,p.y) : ctx.lineTo(p.x,p.y);
+}
+ctx.closePath();
+ctx.fill();
+
+// Grid
+ctx.strokeStyle = 'rgba(180,160,100,0.4)';
+ctx.lineWidth = 1;
+[20,40,60,80,100].forEach(pct => {
+  const r = R * pct / 100;
+  ctx.beginPath();
+  for(let i=0;i<5;i++){
+    const p = getPoint(i,r);
+    i===0 ? ctx.moveTo(p.x,p.y) : ctx.lineTo(p.x,p.y);
+  }
+  ctx.closePath();
+  ctx.stroke();
+});
+
+for(let i=0;i<5;i++){
+  const p = getPoint(i,R);
+  ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(p.x,p.y); ctx.stroke();
+}
+
+// Data polygon
+ctx.fillStyle = 'rgba(180,30,30,0.4)';
+ctx.strokeStyle = '#c0392b';
+ctx.lineWidth = 2.5;
+ctx.beginPath();
+values.forEach((v,i)=>{
+  const r = R*v/max;
+  const p = getPoint(i,r);
+  i===0 ? ctx.moveTo(p.x,p.y) : ctx.lineTo(p.x,p.y);
+});
+ctx.closePath(); ctx.fill(); ctx.stroke();
+
+ctx.fillStyle = '#c0392b';
+values.forEach((v,i)=>{
+  const r = R*v/max;
+  const p = getPoint(i,r);
+  ctx.beginPath(); ctx.arc(p.x,p.y,5,0,2*Math.PI); ctx.fill();
+});
+
+const labelNames = ['自我模型','情感模型','态度模型','行动驱动','社交模型'];
+const labelPad = 26;
+values.forEach((v,i)=>{
+  const p = getPoint(i, R+labelPad);
+  ctx.fillStyle = '#c0392b';
+  ctx.font = 'bold 18px "Arial Black",sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(v, p.x, p.y-12);
+  ctx.fillStyle = '#2c2c2c';
+  ctx.font = '14px "Noto Serif SC",serif';
+  ctx.fillText(labelNames[i], p.x, p.y+10);
+});
+</script>
+</body>
+</html>

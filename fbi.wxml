@@ -1,0 +1,189 @@
+<view class="wrap">
+  <view class="cp-search-wrap">
+    <view class="cp-search-box">
+      <text class="cp-search-ico">🔍</text>
+      <input
+        class="cp-search-input"
+        value="{{cpQuery}}"
+        placeholder="搜索 CP（点击显示5个预生成）"
+        bindfocus="onCpQueryFocus"
+        bindblur="onCpQueryBlur"
+        bindinput="onCpQueryInput"
+      />
+    </view>
+    <view class="cp-options {{cpOptionsVisible?'show':''}}">
+      <scroll-view scroll-y class="cp-options-scroll">
+        <view wx:if="{{cpOptions.length===0}}" class="cp-option-empty mono">暂无匹配 CP</view>
+        <view wx:for="{{cpOptions}}" wx:key="id" class="cp-option" data-id="{{item.id}}" bindtap="onSelectCp">
+          <view class="cp-option-name">{{item.name}}</view>
+          <view class="cp-option-alias mono">{{item.aliasText}}</view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+
+  <view class="case-card">
+    <view class="case-card-top">
+      <view class="case-num mono">CASE #CP-{{currentCpId}}</view>
+      <view class="case-tier mono">HIGH HEAT</view>
+    </view>
+    <view class="case-body">
+      <view class="classified-stamp mono">CLASSIFIED</view>
+      <input class="cp-name" value="{{cpName}}" bindinput="onCpName" />
+      <input class="cp-type" value="{{cpType}}" bindinput="onCpType" />
+      <view class="case-stats">
+        <view class="case-stat">
+          <view class="case-stat-val">{{statVideos}}</view>
+          <view class="case-stat-lbl mono">视频</view>
+        </view>
+        <view class="case-stat">
+          <view class="case-stat-val">{{statComments}}</view>
+          <view class="case-stat-lbl mono">评论</view>
+        </view>
+        <view class="case-stat">
+          <view class="case-stat-val">{{statHeat}}</view>
+          <view class="case-stat-lbl mono">情感烈度</view>
+        </view>
+      </view>
+    </view>
+    <view class="case-edit-hint mono">可编辑 · 点击弹幕可点赞 · AI按钮走 DeepSeek</view>
+  </view>
+
+  <view class="section-head">
+    <view class="section-title mono">// 跨次元弹幕</view>
+    <view class="section-action mono" bindtap="seedDanmu">补一条</view>
+  </view>
+  <view class="danmu-screen" id="danmuBox" bindtap="onDanmuTap">
+    <view
+      wx:for="{{danmus}}"
+      wx:key="id"
+      class="danmu-item mono"
+      data-id="{{item.id}}"
+      style="top: {{item.top}}px; transform: translate3d({{item.x}}px,0,0); color: {{item.liked ? '#FFD700' : '#FFFFFF'}}; font-size: {{fontSize}}px;"
+    >
+      <text>{{item.text}}</text>
+      <text wx:if="{{item.likes>0}}" class="danmu-like"> ▲{{item.likes}}</text>
+    </view>
+  </view>
+
+  <view class="section-head">
+    <view class="section-title mono">// 故事时间线</view>
+    <view class="section-action mono" bindtap="openAdd">+ 新增事件</view>
+  </view>
+
+  <view class="timeline-filter">
+    <view class="tl-search">
+      <text class="tl-search-ico">🔎</text>
+      <input class="tl-search-input" value="{{search}}" placeholder="搜索时间线…" bindinput="onSearch" />
+    </view>
+    <view class="tl-filter-btn mono {{filter==='all'?'active':''}}" data-t="all" bindtap="setFilter">全部</view>
+    <view class="tl-filter-btn mono {{filter==='key'?'active':''}}" data-t="key" bindtap="setFilter">重要</view>
+    <view class="tl-filter-btn mono {{filter==='hot'?'active':''}}" data-t="hot" bindtap="setFilter">高热</view>
+  </view>
+
+  <view class="timeline">
+    <view wx:if="{{filtered.length===0}}" class="empty-state mono">暂无匹配的时间节点</view>
+    <view wx:for="{{filtered}}" wx:key="id" class="tl-item">
+      <view class="tl-dot-wrap">
+        <view class="tl-dot {{item.type}}"></view>
+      </view>
+      <view class="tl-card">
+        <view class="tl-card-head">
+          <view class="tl-date mono">{{item.date}}</view>
+          <view class="tl-badge mono {{item.type}}">{{item.badgeText}}</view>
+          <button class="tl-like mono" data-id="{{item.id}}" bindtap="likeTimeline" disabled="{{item.userLiked}}">❤ {{item.likes}}</button>
+        </view>
+        <view class="tl-card-body">
+          <view wx:if="{{item.link}}" class="tl-title tl-title-link mono" data-link="{{item.link}}" bindtap="onTimelineLinkTap">{{item.title}}</view>
+          <view wx:else class="tl-title">{{item.title}}</view>
+          <view class="tl-desc">{{item.desc}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="add-tl-btn mono" bindtap="openAdd">＋ 添加新的故事节点</view>
+
+  <view class="section-head">
+    <view class="section-title mono">// 顶级证词存档</view>
+  </view>
+  <view class="evidence-list">
+    <view wx:for="{{evidence}}" wx:key="id" class="ev-card tier{{item.tier}}">
+      <view class="ev-rank mono">#{{item.evRank}}</view>
+      <view class="ev-content">
+        <view class="ev-text">{{item.text}}</view>
+        <view class="ev-likes mono">▲ <text class="ev-likes-num">{{item.likes}}</text> <text class="ev-likes-s">赞</text></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section-head" style="margin-top: 8px;">
+    <view class="section-title mono">// 特工档案</view>
+  </view>
+  <view class="ugc-wrap">
+    <view class="ugc-card">
+      <view class="ugc-card-head"><view class="ugc-card-title mono">【特工代号】</view></view>
+      <view class="ugc-card-body"><input class="ugc-input" value="{{agentId}}" placeholder="自动分配特工ID" bindinput="onAgentId" disabled="true" /></view>
+    </view>
+    <view class="ugc-card">
+      <view class="ugc-card-head"><view class="ugc-card-title mono">【追踪日志】</view></view>
+      <view class="ugc-card-body"><textarea class="ugc-input" value="{{agentLog}}" placeholder="记录你发现的罪证时间线…" bindinput="onAgentLog"></textarea></view>
+    </view>
+    <view class="ugc-card">
+      <view class="ugc-card-head">
+        <view class="ugc-card-title mono">【侧写分析】</view>
+        <button class="ugc-btn gold mono" size="mini" bindtap="aiPolish" loading="{{busy}}">AI润色</button>
+      </view>
+      <view class="ugc-card-body">
+        <textarea class="ugc-input" value="{{agentAnalysis}}" placeholder="写下你的CP心理侧写分析…" bindinput="onAgentAnalysis"></textarea>
+        <view class="ai-output {{aiOut?'show':''}}">{{aiOut}}</view>
+      </view>
+    </view>
+    <button class="ugc-btn mono" bindtap="genReport" loading="{{busy}}">◈ 生成结案报告</button>
+    <view class="ai-output {{reportOut?'show':''}}">{{reportOut}}</view>
+  </view>
+
+  <view class="modal-overlay {{reportModalOpen?'show':''}}" bindtap="closeReportModal">
+    <view class="report-sheet" catchtap="noop">
+      <view class="modal-handle"></view>
+      <view class="report-title">侦探式结案报告</view>
+      <scroll-view scroll-y class="report-body">
+        <text selectable="true">{{reportCardText}}</text>
+      </scroll-view>
+      <view class="report-btn-row">
+        <view class="modal-cancel mono" bindtap="closeReportModal">关闭</view>
+        <view class="modal-save" bindtap="copyReportCard">复制报告</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="modal-overlay {{openAddModal?'show':''}}" bindtap="closeAdd">
+    <view class="modal-sheet" catchtap="noop">
+      <view class="modal-handle"></view>
+      <view class="modal-title">新增故事节点</view>
+      <view class="modal-field">
+        <view class="modal-label mono">日期</view>
+        <input class="modal-input" value="{{mDate}}" placeholder="如：早期 / 2019-01-01" bindinput="onMDate" />
+      </view>
+      <view class="modal-field">
+        <view class="modal-label mono">事件标题</view>
+        <input class="modal-input" value="{{mTitle}}" placeholder="简短描述这个节点" bindinput="onMTitle" />
+      </view>
+      <view class="modal-field">
+        <view class="modal-label mono">事件描述</view>
+        <textarea class="modal-textarea" value="{{mDesc}}" placeholder="详细描述场景、台词、情感意义…" bindinput="onMDesc"></textarea>
+      </view>
+      <view class="modal-field">
+        <view class="modal-label mono">类型</view>
+        <picker mode="selector" range="{{typeOptions}}" bindchange="onMType">
+          <view class="modal-select">{{typeOptions[typeIndex]}}</view>
+        </picker>
+      </view>
+      <view class="modal-btn-row">
+        <view class="modal-cancel mono" bindtap="closeAdd">取消</view>
+        <view class="modal-save" bindtap="saveNode">保存节点</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="toast {{toast?'show':''}} mono">{{toast}}</view>
+</view>

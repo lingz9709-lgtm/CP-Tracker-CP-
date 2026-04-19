@@ -1,0 +1,35 @@
+{
+  "lazyCodeLoading": "requiredComponents",
+  "pages": [
+    "pages/fbi/fbi",
+    "pages/test/test",
+    "pages/pixel/pixel",
+    "pages/webview/webview"
+  ],
+  "window": {
+    "navigationBarTitleText": "CP侦探局",
+    "navigationBarBackgroundColor": "#2a2118",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#373327"
+  },
+  "tabBar": {
+    "color": "#6b5944",
+    "selectedColor": "#ac211c",
+    "backgroundColor": "#2a2118",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/fbi/fbi",
+        "text": "FBI小警察"
+      },
+      {
+        "pagePath": "pages/test/test",
+        "text": "测一测"
+      },
+      {
+        "pagePath": "pages/pixel/pixel",
+        "text": "生成CP图"
+      }
+    ]
+  }
+}

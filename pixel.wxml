@@ -1,0 +1,54 @@
+<view class="wrap">
+  <view class="card">
+    <view class="title mono">结婚照生成</view>
+    <view class="row">
+      <input class="input" value="{{cpName}}" placeholder="输入 CP 名称" bindinput="onCpName" />
+    </view>
+    <view class="row">
+      <picker mode="selector" range="{{modeOptions}}" value="{{modeIndex}}" bindchange="onModeChange">
+        <view class="input mode-picker">图像生成选择：{{modeOptions[modeIndex]}}</view>
+      </picker>
+    </view>
+    <view class="row">
+      <input class="input" value="{{memo}}" placeholder="备注（可选）" bindinput="onMemo" />
+    </view>
+    <view class="drag-tip mono">提示：上传图片建议为 1:1；若非 1:1，请用下方裁剪调节后再生成。</view>
+
+    <view class="uploads">
+      <view class="up">
+        <view class="up-t mono">左方</view>
+        <image wx:if="{{img1}}" class="prev" src="{{img1}}" bindtap="pick1"></image>
+        <view wx:else class="ph mono" bindtap="pick1">点击选图</view>
+      </view>
+      <view class="x mono">×</view>
+      <view class="up">
+        <view class="up-t mono">右方</view>
+        <image wx:if="{{img2}}" class="prev" src="{{img2}}" bindtap="pick2"></image>
+        <view wx:else class="ph mono" bindtap="pick2">点击选图</view>
+      </view>
+    </view>
+
+    <view wx:if="{{img1Meta.nonSquare}}" class="crop-box">
+      <view class="crop-title mono">左图裁剪（非1:1）</view>
+      <view class="crop-row mono">水平偏移 {{crop1X}}</view>
+      <slider min="-50" max="50" step="1" value="{{crop1X}}" bindchange="onCrop1X" activeColor="#ac211c" backgroundColor="#6b5944"/>
+      <view class="crop-row mono">垂直偏移 {{crop1Y}}</view>
+      <slider min="-50" max="50" step="1" value="{{crop1Y}}" bindchange="onCrop1Y" activeColor="#ac211c" backgroundColor="#6b5944"/>
+    </view>
+    <view wx:if="{{img2Meta.nonSquare}}" class="crop-box">
+      <view class="crop-title mono">右图裁剪（非1:1）</view>
+      <view class="crop-row mono">水平偏移 {{crop2X}}</view>
+      <slider min="-50" max="50" step="1" value="{{crop2X}}" bindchange="onCrop2X" activeColor="#ac211c" backgroundColor="#6b5944"/>
+      <view class="crop-row mono">垂直偏移 {{crop2Y}}</view>
+      <slider min="-50" max="50" step="1" value="{{crop2Y}}" bindchange="onCrop2Y" activeColor="#ac211c" backgroundColor="#6b5944"/>
+    </view>
+
+    <button class="btn mono" bindtap="generate">生成</button>
+  </view>
+
+  <view class="card">
+    <view class="sub mono">预览</view>
+    <canvas type="2d" id="c" style="width: 100%; height: 500px;"></canvas>
+    <button class="btn ghost mono" bindtap="save">保存到相册</button>
+  </view>
+</view>

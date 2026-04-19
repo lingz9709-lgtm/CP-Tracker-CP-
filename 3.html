@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080">
+<title>CP Tracker - 猫系CP人</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Serif+SC:wght@400;700&display=swap');
+  * { margin:0;padding:0;box-sizing:border-box; }
+  body { width:1080px;height:1080px;background:#f5f0e8;font-family:'Noto Serif SC',serif;overflow:hidden; }
+  .card { width:1080px;height:1080px;background:#f5f0e8;display:flex;flex-direction:column; }
+  .border-top { height:8px;background:#c0392b; }
+  .border-top-thin { height:3px;background:#2c2c2c;margin-top:3px; }
+  .header { padding:18px 30px 12px 30px;display:flex;align-items:flex-start; }
+  .brand-left { display:flex;flex-direction:column;gap:6px; }
+  .brand-title { font-size:62px;font-weight:900;color:#1a1a1a;font-family:'Black Han Sans','Arial Black',sans-serif;letter-spacing:-1px;line-height:1; }
+  .love-type-row { display:flex;align-items:center;gap:6px; }
+  .badge { background:#c0392b;color:#fff;font-size:22px;font-weight:900;font-family:'Black Han Sans','Arial Black',sans-serif;padding:4px 14px;letter-spacing:1px; }
+  .ampersand { color:#1a1a1a;font-size:28px;font-weight:900;font-family:'Arial Black',sans-serif; }
+  .brand-right { display:flex;flex-direction:column;justify-content:center;padding-left:30px;padding-top:4px;flex:1; }
+  .divider-thick { height:5px;background:#c0392b;margin:0 30px; }
+  .divider-thin { height:2px;background:#2c2c2c;margin:4px 30px 0; }
+  .content { display:flex;flex:1;padding:20px 30px 0 30px;gap:20px; }
+  .left-panel { width:400px;display:flex;flex-direction:column;gap:16px; }
+  .radar-container { background:#ede8dc;border:2px solid #b5a98a;padding:20px 10px;display:flex;align-items:center;justify-content:center;height:300px; }
+  .quote-box { background:#c0392b;padding:16px 18px;color:#fff;font-size:20px;font-weight:700;line-height:1.6;letter-spacing:1px; }
+  .body-text { font-size:15px;color:#2c2c2c;line-height:1.9;letter-spacing:0.5px;text-align:justify; }
+  .right-panel { flex:1;position:relative;overflow:hidden; }
+  .newspaper-bg { position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 18px,rgba(0,0,0,0.04) 18px,rgba(0,0,0,0.04) 19px),repeating-linear-gradient(90deg,transparent,transparent 50px,rgba(0,0,0,0.02) 50px,rgba(0,0,0,0.02) 51px);background-color:#e8e0d0; }
+  .newspaper-torn { position:absolute;top:0;width:100%;height:130px;background:#d4cbb8;clip-path:polygon(0 0,100% 0,100% 60%,85% 80%,70% 65%,55% 85%,40% 70%,25% 90%,10% 75%,0 85%); }
+  .dots-overlay { position:absolute;inset:0;background-image:radial-gradient(circle,rgba(0,0,0,0.12) 1px,transparent 1px);background-size:8px 8px;opacity:0.5; }
+  .illustration { position:absolute;bottom:40px;left:50%;transform:translateX(-50%); }
+  .border-bottom-thin { height:3px;background:#2c2c2c;margin-top:auto; }
+  .border-bottom { height:8px;background:#c0392b;margin-top:3px; }
+  canvas { display:block; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="border-top"></div>
+  <div class="border-top-thin"></div>
+
+  <div class="header">
+    <div class="brand-left">
+      <div class="brand-title">CP Tracker</div>
+      <div class="love-type-row">
+        <div class="badge">LOVE</div>
+        <span class="ampersand">&amp;</span>
+        <div class="badge">TYPE</div>
+      </div>
+    </div>
+    <div class="brand-right">
+      <div style="font-size:62px;font-weight:900;color:#1a1a1a;font-family:'Black Han Sans','Arial Black',sans-serif;letter-spacing:-1px;line-height:1;">25型 CP人格</div>
+      <div style="display:flex;align-items:baseline;gap:40px;margin-top:4px;">
+        <div style="font-size:42px;font-weight:900;color:#c0392b;font-family:'Black Han Sans','Arial Black',sans-serif;letter-spacing:2px;line-height:1;">CAT</div>
+        <div style="font-size:52px;font-weight:900;color:#1a1a1a;font-family:'Black Han Sans','Noto Serif SC',sans-serif;letter-spacing:4px;line-height:1;">猫系CP人</div>
+      </div>
+      <div style="font-size:17px;color:#2c2c2c;margin-top:6px;letter-spacing:1px;">低需求陪伴：敏感且自尊 独立而庄重</div>
+    </div>
+  </div>
+
+  <div class="divider-thick"></div>
+  <div class="divider-thin"></div>
+
+  <div class="content">
+    <div class="left-panel">
+      <div class="radar-container">
+        <canvas id="radar" width="360" height="280"></canvas>
+      </div>
+      <div class="quote-box">
+        我爱你，但我是自由的；<br>我是自由的，但我选择你。
+      </div>
+      <div class="body-text">
+        你像猫一样，拥有着独立而庄重的灵魂，敏感且自尊。你并不强求热烈的互动，只愿提供一份低需求的陪伴，在CP需要时悄然出现，不需要时便安静过好自己的生活。<br>
+        你习惯默默关注，将深情藏在不经意的眼神里，保持着恰到好处的距离。这种若即若离的姿态，并非冷漠，而是守护彼此的自由空间，用最舒服的方式，温柔地守护着这份关系。
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <div class="newspaper-bg"></div>
+      <div class="newspaper-torn"></div>
+      <div class="dots-overlay"></div>
+      <div class="illustration">
+        <svg width="380" height="400" viewBox="0 0 380 400" xmlns="http://www.w3.org/2000/svg">
+          <!-- Cat silhouette walking -->
+          <!-- Body -->
+          <path d="M80 220 C75 190 85 165 110 155 C120 148 135 145 150 148
+                   C160 142 175 138 190 140
+                   C205 138 225 142 240 152
+                   C260 160 270 175 268 200
+                   C270 215 265 230 255 240
+                   C245 248 230 250 215 248
+                   L210 270 L220 300 L200 295 L195 268
+                   L185 265 L175 268 L170 295 L150 300 L160 270 L155 248
+                   C140 250 125 248 115 242
+                   C95 235 80 230 80 220 Z" fill="#1a1a1a"/>
+          <!-- Head -->
+          <path d="M130 148 C125 130 118 115 120 100 C122 90 130 82 140 80
+                   C148 78 155 82 160 90
+                   L165 78 L170 70 L175 78
+                   L180 90 C185 82 192 78 200 80
+                   C210 82 218 90 220 100
+                   C222 115 215 130 210 148
+                   C200 142 190 138 180 140
+                   C170 138 155 142 145 148 Z" fill="#1a1a1a"/>
+          <!-- Ears (pointed) -->
+          <path d="M130 100 L120 70 L148 90 Z" fill="#1a1a1a"/>
+          <path d="M210 100 L220 70 L192 90 Z" fill="#1a1a1a"/>
+          <!-- Eyes -->
+          <ellipse cx="148" cy="108" rx="8" ry="6" fill="#f5f0e8" opacity="0.9"/>
+          <ellipse cx="202" cy="108" rx="8" ry="6" fill="#f5f0e8" opacity="0.9"/>
+          <ellipse cx="148" cy="108" rx="4" ry="5" fill="#1a1a1a"/>
+          <ellipse cx="202" cy="108" rx="4" ry="5" fill="#1a1a1a"/>
+          <!-- Nose -->
+          <path d="M172 118 L175 114 L178 118 L175 121 Z" fill="#c0392b"/>
+          <!-- Whiskers -->
+          <line x1="120" y1="118" x2="160" y2="120" stroke="#f5f0e8" stroke-width="1.5" opacity="0.7"/>
+          <line x1="118" y1="124" x2="158" y2="124" stroke="#f5f0e8" stroke-width="1.5" opacity="0.7"/>
+          <line x1="190" y1="120" x2="230" y2="118" stroke="#f5f0e8" stroke-width="1.5" opacity="0.7"/>
+          <line x1="192" y1="124" x2="232" y2="124" stroke="#f5f0e8" stroke-width="1.5" opacity="0.7"/>
+          <!-- Tail -->
+          <path d="M268 200 C290 185 310 175 320 155 C328 138 322 120 310 125 C300 130 295 148 285 160 C275 172 265 185 262 200" fill="#1a1a1a"/>
+          <!-- Front legs -->
+          <path d="M110 230 L95 290 L105 295 L115 240" fill="#1a1a1a"/>
+          <path d="M130 235 L120 295 L130 295 L140 238" fill="#1a1a1a"/>
+          <!-- Paws -->
+          <ellipse cx="100" cy="295" rx="10" ry="7" fill="#1a1a1a"/>
+          <ellipse cx="125" cy="296" rx="10" ry="7" fill="#1a1a1a"/>
+          <!-- White outline around whole cat -->
+          <path d="M80 220 C75 190 85 165 110 155 C120 148 135 145 150 148
+                   C160 142 175 138 190 140
+                   C205 138 225 142 240 152
+                   C260 160 270 175 268 200
+                   C270 215 265 230 255 240
+                   C245 248 230 250 215 248
+                   L210 270 L220 300 L200 295 L195 268
+                   L185 265 L175 268 L170 295 L150 300 L160 270 L155 248
+                   C140 250 125 248 115 242
+                   C95 235 80 230 80 220 Z
+                   M130 148 C125 130 118 115 120 100 C122 90 130 82 140 80
+                   C148 78 155 82 160 90
+                   L165 78 L170 70 L175 78
+                   L180 90 C185 82 192 78 200 80
+                   C210 82 218 90 220 100
+                   C222 115 215 130 210 148" fill="none" stroke="white" stroke-width="6" stroke-linejoin="round"/>
+          <!-- Halftone dots bottom -->
+          <g opacity="0.3">
+            <circle cx="100" cy="340" r="4" fill="#1a1a1a"/>
+            <circle cx="130" cy="350" r="5" fill="#1a1a1a"/>
+            <circle cx="165" cy="356" r="6" fill="#1a1a1a"/>
+            <circle cx="200" cy="358" r="7" fill="#1a1a1a"/>
+            <circle cx="240" cy="354" r="5" fill="#1a1a1a"/>
+            <circle cx="272" cy="345" r="4" fill="#1a1a1a"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div style="height:16px;"></div>
+  <div class="border-bottom-thin"></div>
+  <div class="border-bottom"></div>
+</div>
+
+<script>
+const canvas = document.getElementById('radar');
+const ctx = canvas.getContext('2d');
+const cx = canvas.width/2, cy = canvas.height/2+10;
+const R = 110;
+const values = [88, 42, 78, 58, 20];
+
+function getPoint(i,r){
+  const a=(i*2*Math.PI/5)-Math.PI/2;
+  return{x:cx+r*Math.cos(a),y:cy+r*Math.sin(a)};
+}
+
+ctx.fillStyle='rgba(60,50,30,0.85)';
+ctx.beginPath();
+for(let i=0;i<5;i++){const p=getPoint(i,R);i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y);}
+ctx.closePath();ctx.fill();
+
+ctx.strokeStyle='rgba(180,160,100,0.4)';ctx.lineWidth=1;
+[20,40,60,80,100].forEach(pct=>{
+  const r=R*pct/100;
+  ctx.beginPath();
+  for(let i=0;i<5;i++){const p=getPoint(i,r);i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y);}
+  ctx.closePath();ctx.stroke();
+});
+for(let i=0;i<5;i++){const p=getPoint(i,R);ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(p.x,p.y);ctx.stroke();}
+
+ctx.fillStyle='rgba(180,30,30,0.4)';ctx.strokeStyle='#c0392b';ctx.lineWidth=2.5;
+ctx.beginPath();
+values.forEach((v,i)=>{const r=R*v/100;const p=getPoint(i,r);i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y);});
+ctx.closePath();ctx.fill();ctx.stroke();
+
+ctx.fillStyle='#c0392b';
+values.forEach((v,i)=>{const r=R*v/100;const p=getPoint(i,r);ctx.beginPath();ctx.arc(p.x,p.y,5,0,2*Math.PI);ctx.fill();});
+
+const lbl=['自我模型','情感模型','态度模型','行动驱动','社交模型'];
+values.forEach((v,i)=>{
+  const p=getPoint(i,R+26);
+  ctx.fillStyle='#c0392b';ctx.font='bold 18px "Arial Black",sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText(v,p.x,p.y-12);
+  ctx.fillStyle='#2c2c2c';ctx.font='14px "Noto Serif SC",serif';
+  ctx.fillText(lbl[i],p.x,p.y+10);
+});
+</script>
+</body>
+</html>
